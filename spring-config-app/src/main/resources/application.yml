@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: spring-config-app
+security:
+  user:
+    name: admin
+    password: admin
+server:
+  port: 8040

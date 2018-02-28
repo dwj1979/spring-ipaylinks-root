@@ -1,0 +1,476 @@
+<!DOCTYPE HTML>
+<html th:lang="${#locale.language}" xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta charset="utf-8" />
+        <title>zookeeper配置中心</title>
+        <!-- default header name is X-CSRF-TOKEN -->
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta content="width=device-width, initial-scale=1" name="viewport" />
+        <meta content="Preview page of Metronic Admin Theme #1 for statistics, charts, recent events and reports" name="description" />
+        <meta content="" name="author" />
+        <!-- BEGIN GLOBAL MANDATORY STYLES -->
+        <link th:href="@{/assets/font-google.css}" rel="stylesheet" type="text/css" />
+        <link th:href="@{/assets/global/plugins/font-awesome/css/font-awesome.min.css}" rel="stylesheet" type="text/css" />
+        <link th:href="@{/assets/global/plugins/simple-line-icons/simple-line-icons.min.css}" rel="stylesheet" type="text/css" />
+        <link th:href="@{/assets/global/plugins/bootstrap/css/bootstrap.min.css}" rel="stylesheet" type="text/css" />
+        <link th:href="@{/assets/global/plugins/bootstrap-switch/css/bootstrap-switch.min.css}" rel="stylesheet" type="text/css" />
+        <link th:href="@{/assets/global/plugins/datatables/datatables.min.css}" rel="stylesheet" type="text/css"/>
+        <!-- END GLOBAL MANDATORY STYLES -->
+        <!-- BEGIN PAGE LEVEL PLUGINS -->
+        <link th:href="@{/assets/global/plugins/select2/css/select2.min.css}" rel="stylesheet" type="text/css" />
+        <link th:href="@{/assets/global/plugins/select2/css/select2-bootstrap.min.css}" rel="stylesheet" type="text/css" />
+        <link th:href="@{/assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.css}" rel="stylesheet" type="text/css" />
+        <link th:href="@{/assets/global/plugins/bootstrap-markdown/css/bootstrap-markdown.min.css}" rel="stylesheet" type="text/css" />
+        <link th:href="@{/assets/global/plugins/morris/morris.css}" rel="stylesheet" type="text/css" />
+        <link th:href="@{/assets/global/plugins/jqvmap/jqvmap/jqvmap.css}" rel="stylesheet" type="text/css" />
+        <!-- END PAGE LEVEL PLUGINS -->
+        <!-- BEGIN THEME GLOBAL STYLES -->
+        <link th:href="@{/assets/global/css/components.min.css}" rel="stylesheet" id="style_components" type="text/css" />
+        <link th:href="@{/assets/global/css/plugins.min.css}" rel="stylesheet" type="text/css" />
+        <!-- END THEME GLOBAL STYLES -->
+        <!-- BEGIN THEME LAYOUT STYLES -->
+        <link th:href="@{/assets/layouts/layout/css/layout.min.css}" rel="stylesheet" type="text/css" />
+        <link th:href="@{/assets/layouts/layout/css/themes/darkblue.min.css}" rel="stylesheet" type="text/css" id="style_color" />
+        <link th:href="@{/assets/layouts/layout/css/custom.min.css}" rel="stylesheet" type="text/css" />
+        <!-- END THEME LAYOUT STYLES -->
+        <link rel="shortcut icon" href="favicon.ico" />
+    </head>
+    <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
+        <div class="page-wrapper">
+            <div class="page-header navbar navbar-fixed-top">
+                <!-- BEGIN HEADER INNER -->
+                <div class="page-header-inner ">
+                    <!-- BEGIN LOGO -->
+                    <div class="page-logo">
+                        <a th:href="@{/index.htm}">
+                            <img th:src="@{assets/layouts/layout/img/logo.png}" alt="logo" class="logo-default" /> </a>
+                        <div class="menu-toggler sidebar-toggler">
+                            <span></span>
+                        </div>
+                    </div>
+                    <!-- END LOGO -->
+                    <!-- BEGIN RESPONSIVE MENU TOGGLER -->
+                    <a href="javascript:;" class="menu-toggler responsive-toggler" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span></span>
+                    </a>
+                    <!-- END RESPONSIVE MENU TOGGLER -->
+                    <!-- BEGIN TOP NAVIGATION MENU -->
+                    <div class="top-menu">
+                        <ul class="nav navbar-nav pull-right">
+                            <!-- BEGIN NOTIFICATION DROPDOWN -->
+                            <!-- DOC: Apply "dropdown-dark" class after "dropdown-extended" to change the dropdown styte -->
+                            <!-- DOC: Apply "dropdown-hoverable" class after below "dropdown" and remove data-toggle="dropdown" data-hover="dropdown" data-close-others="true" attributes to enable hover dropdown mode -->
+                            <!-- DOC: Remove "dropdown-hoverable" and add data-toggle="dropdown" data-hover="dropdown" data-close-others="true" attributes to the below A element with dropdown-toggle class -->
+                            <li class="dropdown dropdown-user">
+                                <a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown" data-close-others="true">
+                                    <img alt="" class="img-circle" th:src="@{/assets/layouts/layout/img/avatar3_small.jpg}" />
+                                    <span class="username username-hide-on-mobile" th:text="${name}"></span>
+                                    <i class="fa fa-angle-down"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-default">
+                                    <li>
+                                        <a th:href="@{/lock_screen.html}">
+                                            <i class="icon-lock"></i> Lock Screen </a>
+                                    </li>
+                                    <li>
+                                        <a th:href="@{/logout}">
+                                            <i class="icon-logout"></i> Log Out </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- END TOP NAVIGATION MENU -->
+                </div>
+                <!-- END HEADER INNER -->
+            </div>
+            <div class="page-container">
+                <!-- BEGIN SIDEBAR -->
+                <div class="page-sidebar-wrapper">
+                    <!-- BEGIN SIDEBAR -->
+                    <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+                    <!-- DOC: Change data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+                    <div class="page-sidebar navbar-collapse collapse">
+                        <!-- BEGIN SIDEBAR MENU -->
+                        <!-- DOC: Apply "page-sidebar-menu-light" class right after "page-sidebar-menu" to enable light sidebar menu style(without borders) -->
+                        <!-- DOC: Apply "page-sidebar-menu-hover-submenu" class right after "page-sidebar-menu" to enable hoverable(hover vs accordion) sub menu mode -->
+                        <!-- DOC: Apply "page-sidebar-menu-closed" class right after "page-sidebar-menu" to collapse("page-sidebar-closed" class must be applied to the body element) the sidebar sub menu mode -->
+                        <!-- DOC: Set data-auto-scroll="false" to disable the sidebar from auto scrolling/focusing -->
+                        <!-- DOC: Set data-keep-expand="true" to keep the submenues expanded -->
+                        <!-- DOC: Set data-auto-speed="200" to adjust the sub menu slide up/down speed -->
+                        <ul class="page-sidebar-menu  page-header-fixed " data-keep-expanded="false" data-auto-scroll="true" data-slide-speed="200" style="padding-top: 20px">
+                            <!-- DOC: To remove the sidebar toggler from the sidebar you just need to completely remove the below "sidebar-toggler-wrapper" LI element -->
+                            <!-- BEGIN SIDEBAR TOGGLER BUTTON -->
+                            <li class="sidebar-toggler-wrapper hide">
+                                <div class="sidebar-toggler">
+                                    <span></span>
+                                </div>
+                            </li>
+                            <li class="nav-item start active open">
+                                <a href="javascript:;" class="nav-link nav-toggle">
+                                    <i class="icon-home"></i>
+                                    <span class="title">配置中心</span>
+                                    <span class="selected"></span>
+                                    <span class="arrow open"></span>
+                                </a>
+                                <ul class="sub-menu" th:each="project, countryStat: ${projects}">
+                                    <li th:class="${#strings.equals(selectAppName,project.springApplicationName)}?'nav-item start active open':'nav-item start'">
+                                        <a th:href="@{/index.htm(appName=${project.springApplicationName})}" class="nav-link ">
+                                            <i class="icon-settings"></i>
+                                            <span class="title" th:text="${project.springApplicationName}"></span>
+                                            <span th:class="${#strings.equals(selectAppName,project.springApplicationName)}?'selected':''"></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <!-- END SIDEBAR MENU -->
+                        <!-- END SIDEBAR MENU -->
+                    </div>
+                    <!-- END SIDEBAR -->
+                </div>
+                <div class="page-content-wrapper">
+                    <!-- BEGIN CONTENT BODY -->
+                    <div class="page-content">
+                        <!-- BEGIN PAGE HEADER-->
+                        <!-- BEGIN THEME PANEL -->
+                        <div class="theme-panel hidden-xs hidden-sm">
+                            <div class="toggler"> </div>
+                            <div class="toggler-close"> </div>
+                            <div class="theme-options">
+                                <div class="theme-option theme-colors clearfix">
+                                    <span> THEME COLOR </span>
+                                    <ul>
+                                        <li class="color-default current tooltips" data-style="default" data-container="body" data-original-title="Default"> </li>
+                                        <li class="color-darkblue tooltips" data-style="darkblue" data-container="body" data-original-title="Dark Blue"> </li>
+                                        <li class="color-blue tooltips" data-style="blue" data-container="body" data-original-title="Blue"> </li>
+                                        <li class="color-grey tooltips" data-style="grey" data-container="body" data-original-title="Grey"> </li>
+                                        <li class="color-light tooltips" data-style="light" data-container="body" data-original-title="Light"> </li>
+                                        <li class="color-light2 tooltips" data-style="light2" data-container="body" data-html="true" data-original-title="Light 2"> </li>
+                                    </ul>
+                                </div>
+                                <div class="theme-option">
+                                    <span> Theme Style </span>
+                                    <select class="layout-style-option form-control input-sm">
+                                        <option value="square" selected="selected">Square corners</option>
+                                        <option value="rounded">Rounded corners</option>
+                                    </select>
+                                </div>
+                                <div class="theme-option">
+                                    <span> Layout </span>
+                                    <select class="layout-option form-control input-sm">
+                                        <option value="fluid" selected="selected">Fluid</option>
+                                        <option value="boxed">Boxed</option>
+                                    </select>
+                                </div>
+                                <div class="theme-option">
+                                    <span> Header </span>
+                                    <select class="page-header-option form-control input-sm">
+                                        <option value="fixed" selected="selected">Fixed</option>
+                                        <option value="default">Default</option>
+                                    </select>
+                                </div>
+                                <div class="theme-option">
+                                    <span> Top Menu Dropdown</span>
+                                    <select class="page-header-top-dropdown-style-option form-control input-sm">
+                                        <option value="light" selected="selected">Light</option>
+                                        <option value="dark">Dark</option>
+                                    </select>
+                                </div>
+                                <div class="theme-option">
+                                    <span> Sidebar Mode</span>
+                                    <select class="sidebar-option form-control input-sm">
+                                        <option value="fixed">Fixed</option>
+                                        <option value="default" selected="selected">Default</option>
+                                    </select>
+                                </div>
+                                <div class="theme-option">
+                                    <span> Sidebar Menu </span>
+                                    <select class="sidebar-menu-option form-control input-sm">
+                                        <option value="accordion" selected="selected">Accordion</option>
+                                        <option value="hover">Hover</option>
+                                    </select>
+                                </div>
+                                <div class="theme-option">
+                                    <span> Sidebar Style </span>
+                                    <select class="sidebar-style-option form-control input-sm">
+                                        <option value="default" selected="selected">Default</option>
+                                        <option value="light">Light</option>
+                                    </select>
+                                </div>
+                                <div class="theme-option">
+                                    <span> Sidebar Position </span>
+                                    <select class="sidebar-pos-option form-control input-sm">
+                                        <option value="left" selected="selected">Left</option>
+                                        <option value="right">Right</option>
+                                    </select>
+                                </div>
+                                <div class="theme-option">
+                                    <span> Footer </span>
+                                    <select class="page-footer-option form-control input-sm">
+                                        <option value="fixed">Fixed</option>
+                                        <option value="default" selected="selected">Default</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END THEME PANEL -->
+                        <!-- BEGIN PAGE BAR -->
+                        <div class="page-bar">
+                            <ul class="page-breadcrumb">
+                                <li>
+                                    <a th:href="@{/index.htm}" id="home">主页</a>
+                                    <i class="fa fa-circle"></i>
+                                </li>
+                                <li>
+                                    <a th:href="@{/index.htm(appName=${selectProject.springApplicationName})}" th:text="${selectProject.name}" id="local"></a>
+                                </li>
+                            </ul>
+                            <div class="page-toolbar">
+                                <div class="btn-group pull-right">
+                                    <button type="button" class="btn green btn-sm btn-outline dropdown-toggle" data-toggle="dropdown">管理项目
+                                        <i class="fa fa-angle-down"></i>
+                                    </button>
+                                    <ul class="dropdown-menu pull-right" role="menu">
+                                        <li>
+                                            <a href="#addProject" data-toggle="modal">
+                                                <i class="icon-plus"></i>增加项目</a>
+                                        </li>
+                                        <li>
+                                            <a href="#">
+                                                <i class="icon-trash"></i>删除项目</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- END PAGE BAR -->
+                        <!-- BEGIN PAGE TITLE-->
+                        <h1 class="page-title">[[${selectProject.name}]]
+                            <small th:text="${selectProject.desc}"></small>
+                        </h1>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="portlet box green">
+                                    <div class="portlet-title">
+                                        <div class="caption">
+                                            <i class="fa fa-globe"></i>所有属性</div>
+                                        <div class="tools"> </div>
+                                    </div>
+                                    <div class="portlet-body">
+                                        <table class="table table-striped table-bordered table-hover dt-responsive table-checkable order-column" id="sample_2">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 40%">属性名称</th>
+                                                    <th style="width: 20%">属性值</th>
+                                                    <th style="width: 35%">属性描述</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr>
+                                                <th>spring.datasource.hakaricp.read.url</th>
+                                                <th>nothing</th>
+                                                <th>读库的url</th>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="addProject" class="modal fade" tabindex="-1" data-width="400">
+                            <div class="modal-dialog">
+                                <form th:action="@{/createProject.json}" id="projectForm" class="form-horizontal">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                            <h4 class="modal-title">增加项目</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-body">
+                                                        <div class="alert alert-danger display-hide">
+                                                            <button class="close" data-close="alert"></button>有错误,请检查</div>
+                                                        <div class="alert alert-success display-hide">
+                                                            <button class="close" data-close="alert"></button>填写正确</div>
+                                                        <div class="form-group margin-top-20">
+                                                            <label class="control-label col-md-3">项目服务名
+                                                                <span class="required"> * </span>
+                                                            </label>
+                                                            <div class="col-md-9">
+                                                                <div class="input-icon right">
+                                                                    <i class="fa"></i>
+                                                                    <input class="form-control" name="springApplicationName" /> </div>
+                                                                <span class="help-block">如果是spring boot的项目,请在application.yml配置上spring.application.name</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3">服务名称
+                                                                <span class="required"> * </span>
+                                                            </label>
+                                                            <div class="col-md-9">
+                                                                <div class="input-icon right">
+                                                                    <i class="fa"></i>
+                                                                    <input class="form-control" name="name" /> </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3">服务描述
+                                                                <span class="required"> * </span>
+                                                            </label>
+                                                            <div class="col-md-9">
+                                                                <div class="input-icon right">
+                                                                    <i class="fa"></i>
+                                                                    <input class="form-control" name="desc" /> </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" data-dismiss="modal" class="btn dark btn-outline" id="closeProject">关闭</button>
+                                            <button class="btn red">提交</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <input type="hidden" th:value="${selectProject.path}" id="path"/>
+                        <a th:href="@{/showProperties.json(path=${selectProject.path})}" id="showProperties"></a>
+                        <a th:href="@{/deleteProperty.json(path=${selectProject.path})}" id="deleteProperty"></a>
+                        <div id="addProperty" class="modal fade" tabindex="-1" data-width="400">
+                            <div class="modal-dialog">
+                                <form th:action="@{/addProperty.json}" id="propertyForm" class="form-horizontal">
+                                    <a type="hidden" th:href="@{/editProperty.json}" id="edit"></a>
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true"></button>
+                                            <h4 class="modal-title" id="propertyTitle">增加属性</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="form-body">
+                                                        <div class="alert alert-danger display-hide">
+                                                            <button class="close" data-close="alert"></button>有错误,请检查</div>
+                                                        <div class="alert alert-success display-hide">
+                                                            <button class="close" data-close="alert"></button>填写正确</div>
+                                                        <div class="form-group margin-top-20">
+                                                            <label class="control-label col-md-3">属性名
+                                                                <span class="required"> * </span>
+                                                            </label>
+                                                            <div class="col-md-9">
+                                                                <div class="input-icon right">
+                                                                    <i class="fa"></i>
+                                                                    <input class="form-control" name="name" /> </div>
+                                                                <span class="help-block">eg: spring.datasource.read.hikaricp.url</span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3">属性值
+                                                                <span class="required"> * </span>
+                                                            </label>
+                                                            <div class="col-md-9">
+                                                                <div class="input-icon right">
+                                                                    <i class="fa"></i>
+                                                                    <input class="form-control" name="value" /> </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="form-group">
+                                                            <label class="control-label col-md-3">属性描述
+                                                                <span class="required"> * </span>
+                                                            </label>
+                                                            <div class="col-md-9">
+                                                                <div class="input-icon right">
+                                                                    <i class="fa"></i>
+                                                                    <input class="form-control" name="desc" /> </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" data-dismiss="modal" class="btn dark btn-outline" id="closeProperty">关闭</button>
+                                            <button class="btn red">提交</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- END CONTAINER -->
+            <!-- BEGIN FOOTER -->
+            <div class="page-footer">
+                <div class="page-footer-inner"> 2016 &copy; Metronic Theme By
+                    <a target="_blank" href="http://keenthemes.com">Keenthemes</a> &nbsp;|&nbsp;
+                    <a href="http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes" title="Purchase Metronic just for 27$ and get lifetime updates for free" target="_blank">Purchase Metronic!</a>
+                </div>
+                <div class="scroll-to-top">
+                    <i class="icon-arrow-up"></i>
+                </div>
+            </div>
+            <!-- END FOOTER -->
+        </div>
+        <nav class="quick-nav">
+            <a class="quick-nav-trigger" href="#0">
+                <span aria-hidden="true"></span>
+            </a>
+            <ul>
+                <li>
+                    <a href="#addProperty" class="active" data-toggle="modal" onclick="reset('property','add')">
+                        <span>增加属性</span>
+                        <i class="icon-magnifier-add"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#addProperty" class="active" data-toggle="modal" onclick="reset('property','edit')">
+                        <span>编辑属性</span>
+                        <i class="icon-magnifier"></i>
+                    </a>
+                </li>
+                <li>
+                    <a onclick="deleteProperty()">
+                        <span>删除属性</span>
+                        <i class="icon-magnifier-remove"></i>
+                    </a>
+                </li>
+            </ul>
+            <span aria-hidden="true" class="quick-nav-bg"></span>
+        </nav>
+        <div class="quick-nav-overlay"></div>
+        <script th:src="@{/assets/global/plugins/jquery.min.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/global/plugins/bootstrap/js/bootstrap.min.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/global/plugins/js.cookie.min.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/global/plugins/jquery-slimscroll/jquery.slimscroll.min.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/global/plugins/jquery.blockui.min.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/global/plugins/bootstrap-switch/js/bootstrap-switch.min.js}" type="text/javascript"></script>
+        <!-- END CORE PLUGINS -->
+        <!-- BEGIN PAGE LEVEL PLUGINS -->
+        <script th:src="@{/assets/global/plugins/select2/js/select2.full.min.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/global/plugins/jquery-validation/js/jquery.validate.min.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/global/plugins/jquery-validation/js/additional-methods.min.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/global/plugins/bootstrap-wysihtml5/wysihtml5-0.3.0.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/global/plugins/bootstrap-wysihtml5/bootstrap-wysihtml5.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/global/scripts/datatable.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/global/plugins/datatables/datatables.min.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/global/plugins/datatables/plugins/bootstrap/datatables.bootstrap.js}" type="text/javascript"></script>
+        <!-- END PAGE LEVEL PLUGINS -->
+        <!-- BEGIN THEME GLOBAL SCRIPTS -->
+        <script th:src="@{/assets/global/scripts/app.min.js}" type="text/javascript"></script>
+        <!-- END THEME GLOBAL SCRIPTS -->
+        <!-- BEGIN PAGE LEVEL SCRIPTS -->
+        <script th:src="@{/assets/pages/scripts/table-datatables-buttons.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/pages/scripts/form-validation.js}" type="text/javascript"></script>
+        <!-- END PAGE LEVEL SCRIPTS -->
+        <!-- BEGIN THEME LAYOUT SCRIPTS -->
+        <script th:src="@{/assets/layouts/layout/scripts/layout.min.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/layouts/layout/scripts/demo.min.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/layouts/global/scripts/quick-sidebar.min.js}" type="text/javascript"></script>
+        <script th:src="@{/assets/layouts/global/scripts/quick-nav.min.js}" type="text/javascript"></script>
+    </body>
+</html>

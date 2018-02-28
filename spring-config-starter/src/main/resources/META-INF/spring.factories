@@ -1,0 +1,2 @@
+org.springframework.context.ApplicationContextInitializer=\
+  com.ipaylinks.config.starter.initializer.IpayLinksInitializer
